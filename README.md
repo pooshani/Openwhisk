@@ -32,3 +32,17 @@
      sudo mv wsk /usr/local/bin/wsk
 
 ### Setting up necessary files
+
+## Deployment of OpenWhisk
+ Firstly, we need to specify which of our nodes are core which operates the OpenWhisk control plane (the controller, kafka, zookeeeper, and couchdb pods) and invoker nodes which schedules and executes user containers.
+ Label all nodes as part of the cluster as Invoker nodes by running this command:
+ 
+     kubectl label nodes --all openwhisk-role=invoker
+ then Deploy OpenWhisk using the following commands:
+ 
+     kubectl create namespace openwhisk
+     git clone https://github.com/apache/openwhisk-deploy-kube.git
+     cd openwhisk-deploy-kube
+     mv ../mycluster.yaml .
+     helm install owdev ./helm/openwhisk -n openwhisk --create-namespace -f mycluster.yaml
+    
