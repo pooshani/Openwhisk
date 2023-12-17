@@ -21,3 +21,14 @@
     wget https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz
     tar -zxvf helm-v3.13.3-linux-amd64.tar.gz
     mv linux-amd64/helm /usr/local/bin/helm
+  ## Configuration steps for Openwhisk
+  ### 1- Cluster configuration file setup 
+   Next, you need to create a .yaml file to describe your cluster. An example of such a file can be found at openwhisk/mycluster.yaml. You need to replace <master_node_public_IP> with the public IP address of the master node in the cluster.
+
+### install OpenWhisk Command-line Interface (WSK)
+
+     wget https://github.com/apache/openwhisk-cli/releases/download/latest/OpenWhisk_CLI-latest-linux-386.tgz
+     tar -xvf OpenWhisk_CLI-latest-linux-386.tgz
+     sudo mv wsk /usr/local/bin/wsk
+
+### Setting up necessary files
