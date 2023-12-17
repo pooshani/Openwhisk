@@ -1,2 +1,6 @@
 # OpenWhisk deployment on a Kubernetes Cluster
- # install Docker and Helm 
+ ## Prerequisites: Docker and Helm
+  ### 1- install Docker
+  
+
+ 
