@@ -27,13 +27,15 @@ Let's take the following JavaScript action hello.js:
     }
 You may create a web action hello in the package demo for the namespace guest using the CLI's --web flag with a value of true or yes:
 
-    wsk package create demo
+    wsk -i package create demo
     ok: created package demo
     
-    wsk action create /guest/demo/hello hello.js --web true
+    wsk -i action create /guest/demo/hello hello.js --web true
     ok: created action /guest/demo/hello
+
+    wsk -i action invoke guest/demo/hello --result
     
-    wsk action get /guest/demo/hello --url
+    wsk -i action get /guest/demo/hello --url
     ok: got action hello
     https://${APIHOST}/api/v1/web/guest/demo/hello
     
