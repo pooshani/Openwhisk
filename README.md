@@ -45,4 +45,16 @@
      cd openwhisk-deploy-kube
      mv ../mycluster.yaml .
      helm install owdev ./helm/openwhisk -n openwhisk --create-namespace -f mycluster.yaml
+
+ and Configure the OpenWhisk CLI, wsk, by setting the auth and apihost properties:
+ 
+     wsk  property  set  --apihost <master_node_public_IP>
+     wsk  property  set  --auth  23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP
+
+You can use the following command to monitor the pod creation process:
+
+     kubectl  get  pods  -n  openwhisk  --watch
     
+and  Check if it working or not by listing the installed packages:
+
+     wsk -i package list /whisk.system
