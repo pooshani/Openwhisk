@@ -13,6 +13,9 @@
 
     wsk action invoke helloJS --result --param name World
 
+    wsk action invoke helloJS --blocking
+
+
 ## Web Actions
 Web actions are OpenWhisk actions annotated to quickly enable you to build web based applications. This allows you to program backend logic which your web application can access anonymously without requiring an OpenWhisk authentication key. It is up to the action developer to implement their own desired authentication and authorization.
 
