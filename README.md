@@ -44,6 +44,12 @@
     kubectl get nodes
     kubectl get pod -A
     
+ ### 5- Use the join commands on other VMs in the same network to join the cluster
+    sudo swapoff -a
+    sudo mount -a
+    free -h
+    kubeadm join <Cluster-ip>:6443 --token 9dfcuu.1i81u6xq8bka0hun --discovery-token-ca-cert-hash sha256:850c65aeee8947072ad0905790fe033db4afd8e0263e49382c9a1f5db97a07a7
+   
   ## Configuration steps for Openwhisk
   ### 1- Cluster configuration file setup 
    Next, you need to create a .yaml file to describe your cluster. An example of such a file can be found at openwhisk/mycluster.yaml. You need to replace <master_node_public_IP> with the public IP address of the master node in the cluster.  
