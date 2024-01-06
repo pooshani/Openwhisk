@@ -1,5 +1,5 @@
 # OpenWhisk deployment on a Kubernetes Cluster
- ## Prerequisites: Docker and Helm
+ ## Prerequisites: Docker and Helm and Kubernetes Cluster
   ### 1- install Docker
     # Add Docker's official GPG key:
     sudo apt-get update
@@ -21,9 +21,32 @@
     wget https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz
     tar -zxvf helm-v3.13.3-linux-amd64.tar.gz
     mv linux-amd64/helm /usr/local/bin/helm
+
+### 3- Install Kubernetes and kubeadm
+    sudo su root
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+    cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+    deb http://apt.kubernetes.io/ kubernetes-xenial main
+    EOF
+    exit
+    sudo apt-get update
+    sudo apt-get install -y kubelet kubeadm kubernetes-cni
+
+### 4- Initialize and create the Kubernetes Cluster
+    sudo swapoff -a
+    sudo mount -a
+    free -h
+    sudo kubeadm init --pod-network-cidr=10.10.0.0/16 --cri-socket unix:///run/containerd/containerd.sock
+    sudo mkdir -p .kube
+    sudo cp -i /etc/kubernetes/admin.conf .kube/config
+    sudo chown $(id -u):$(id -g) .kube/config
+    kubectl apply -f https://docs.projectcalico.org/archive/v3.16/manifests/calico.yaml
+    kubectl get nodes
+    kubectl get pod -A
+    
   ## Configuration steps for Openwhisk
   ### 1- Cluster configuration file setup 
-   Next, you need to create a .yaml file to describe your cluster. An example of such a file can be found at openwhisk/mycluster.yaml. You need to replace <master_node_public_IP> with the public IP address of the master node in the cluster.
+   Next, you need to create a .yaml file to describe your cluster. An example of such a file can be found at openwhisk/mycluster.yaml. You need to replace <master_node_public_IP> with the public IP address of the master node in the cluster.  
 
 ### install OpenWhisk Command-line Interface (WSK)
 
