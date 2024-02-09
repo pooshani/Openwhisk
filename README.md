@@ -1,6 +1,6 @@
 # OpenWhisk deployment on a Kubernetes Cluster
  ## Prerequisites: Docker and Helm and Kubernetes Cluster
-  ### 1- install Docker
+  ### 1- install Docker and Containerd.io
     # Add Docker's official GPG key:
     sudo apt-get update
     sudo apt-get install ca-certificates curl GnuPG 
@@ -14,8 +14,17 @@
     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
+   
 
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo rm /etc/containerd/config.toml
+
+    sudo systemctl enable - now docker
+    sudo systemctl daemon-reload
+    sudo systemctl restart docker
+    sudo systemctl status docker
+    sudo systemctl restart containerd
+
  
 ### 2- install Helm
     wget https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz
@@ -23,14 +32,15 @@
     mv linux-amd64/helm /usr/local/bin/helm
 
 ### 3- Install Kubernetes and kubeadm
-    sudo su root
-    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-    cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
-    deb http://apt.kubernetes.io/ kubernetes-xenial main
-    EOF
-    exit
     sudo apt-get update
-    sudo apt-get install -y kubelet kubeadm kubernetes-cni
+    sudo apt-get install -y apt-transport-https ca-certificates curl gp
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    sudo apt-get update
+    sudo apt-get install -y kubelet kubeadm kubectl
+    sudo apt-mark hold kubelet kubeadm kubectl
+
+
 
 ### 4- Initialize and create the Kubernetes Cluster
     sudo swapoff -a
