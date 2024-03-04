@@ -50,7 +50,8 @@
     sudo mkdir -p .kube
     sudo cp -i /etc/kubernetes/admin.conf .kube/config
     sudo chown $(id -u):$(id -g) .kube/config
-    kubectl apply -f https://docs.projectcalico.org/archive/v3.16/manifests/calico.yaml
+    curl https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/calico.yaml -O
+    kubectl apply -f calico.yaml
     kubectl get nodes
     kubectl get pod -A
     
