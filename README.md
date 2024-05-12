@@ -19,7 +19,7 @@
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     sudo rm /etc/containerd/config.toml
 
-    sudo systemctl enable - now docker
+    sudo systemctl enable --now docker
     sudo systemctl daemon-reload
     sudo systemctl restart docker
     sudo systemctl status docker
