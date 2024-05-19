@@ -79,6 +79,12 @@
  Label all nodes as part of the cluster as Invoker nodes by running this command:
  
      kubectl label nodes --all openwhisk-role=invoker
+
+the image "wurstmeister/kafka:2.12-2.3.1" does not exist on DockerHub.so add following lines to values.yaml to use image fatal69100/kafka:2.8.1:
+
+     kafka:
+       imageName: "fatal69100/kafka"
+       imageTag: "2.8.1"
  then Deploy OpenWhisk using the following commands:
  
      kubectl create namespace openwhisk
